@@ -1,9 +1,10 @@
 package com.example.demo.controller;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.bind.annotation.CrossOrigin;
+import com.example.demo.model.NongSan;
+import com.example.demo.repository.NongSanRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+
 import java.util.Arrays;
 import java.util.List;
 
@@ -12,8 +13,16 @@ import java.util.List;
 @RequestMapping("/api/nongsan")
 public class NSController {
 
+    @Autowired
+    private NongSanRepository nongSanRepository;
+
     @GetMapping("/test")
     public List<String> testApi() {
         return Arrays.asList("Tao", "Le", "Man", "Dua Hau");
+    }
+
+    @GetMapping("/all")
+    public List<NongSan> getAllNongSan() {
+        return nongSanRepository.findAll(); 
     }
 }
