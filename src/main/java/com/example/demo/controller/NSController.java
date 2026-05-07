@@ -25,4 +25,26 @@ public class NSController {
     public List<NongSan> getAllNongSan() {
         return nongSanRepository.findAll(); 
     }
+ 
+    @PostMapping("/add")
+    public NongSan addNongSan(@RequestBody NongSan ns) {
+        return nongSanRepository.save(ns);
+    }
+
+    @PutMapping("/update/{id}")
+    public NongSan updateNongSan(@PathVariable String id, @RequestBody NongSan nsDetails) {
+        NongSan ns = nongSanRepository.findById(id).orElseThrow();
+        ns.setTenNS(nsDetails.getTenNS());
+        ns.setLoai(nsDetails.getLoai());
+        ns.setSoLuong(nsDetails.getSoLuong());
+        ns.setGia(nsDetails.getGia());
+        ns.setXuatXu(nsDetails.getXuatXu());
+        return nongSanRepository.save(ns);
+    }
+
+    @DeleteMapping("/delete/{id}")
+    public void deleteNongSan(@PathVariable String id) {
+        nongSanRepository.deleteById(id);
+    }
 }
+
