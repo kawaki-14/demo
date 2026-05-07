@@ -13,6 +13,9 @@ public class NongSan {
     
     private String tenNS;
     private String xuatXu;
+    private Integer soLuong;
+    private Double gia;
+    private String loai;
 
     public String getMaNS() {
         return maNS;
@@ -36,6 +39,30 @@ public class NongSan {
 
     public void setXuatXu(String xuatXu) {
         this.xuatXu = xuatXu;
+    }
+
+    public Integer getSoLuong() {
+        return soLuong;
+    }
+
+    public void setSoLuong(Integer soLuong) {
+        this.soLuong = soLuong;
+    }
+
+    public Double getGia() {
+        return gia;
+    }
+
+    public void setGia(Double gia) {
+        this.gia = gia;
+    }
+
+    public String getLoai() {
+        return loai;
+    }
+
+    public void setLoai(String loai) {
+        this.loai = loai;
     }
     
 }
