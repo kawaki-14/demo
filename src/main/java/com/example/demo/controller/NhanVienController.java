@@ -30,19 +30,36 @@ public class NhanVienController {
     }
 
     @PutMapping("/update/{id}")
-    public ResponseEntity<NhanVien> update(@PathVariable String id, @RequestBody NhanVien nvDetails) {
+    public ResponseEntity<?> update(
+        @PathVariable String id, 
+        @RequestBody NhanVien nvDetails,
+        @RequestHeader("currentRole") String currentRole,
+        @RequestHeader("currentMaNV") String currentMaNV) {
+
+        if (!currentRole.equals("Quản lý") && !currentMaNV.equals(id)) {
+            return ResponseEntity.status(403).body("Bro không có quyền sửa người khác!");
+        }
+
         return nvRepo.findById(id).map(nv -> {
             nv.setHoTen(nvDetails.getHoTen());
-            nv.setChucVu(nvDetails.getChucVu());
+            if (currentRole.equals("Quản lý")) {
+                nv.setChucVu(nvDetails.getChucVu());
+                nv.setMaCa(nvDetails.getMaCa());
+            }
             nv.setSdt(nvDetails.getSdt());
-            nv.setMaCa(nvDetails.getMaCa());
             nv.setMatKhau(nvDetails.getMatKhau());
             return ResponseEntity.ok(nvRepo.save(nv));
         }).orElse(ResponseEntity.notFound().build());
     }
 
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity<?> delete(@PathVariable String id) {
+    public ResponseEntity<?> delete(
+        @PathVariable String id,
+        @RequestHeader("currentRole") String currentRole) {
+        if (!currentRole.equals("Quản lý")) {
+            return ResponseEntity.status(403).body("Chỉ admin mới được xóa nhân viên!");
+        }
+        
         nvRepo.deleteById(id);
         return ResponseEntity.ok().build();
     }
