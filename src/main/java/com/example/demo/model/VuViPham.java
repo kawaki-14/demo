@@ -11,21 +11,22 @@ public class VuViPham {
 
     @Id
     private String maVVP;
-    
     private String tenVVP;
-    
     private Date ngayXayRa;
-    
     private String hinhThucXuLy;
+    private String maNS; 
+    private String mucDo;
 
     public VuViPham() {
     }
 
-    public VuViPham(String maVVP, String tenVVP, Date ngayXayRa, String hinhThucXuLy) {
+    public VuViPham(String maVVP, String tenVVP, Date ngayXayRa, String hinhThucXuLy, String maNS, String mucDo) {
         this.maVVP = maVVP;
         this.tenVVP = tenVVP;
         this.ngayXayRa = ngayXayRa;
         this.hinhThucXuLy = hinhThucXuLy;
+        this.maNS = maNS;
+        this.mucDo = mucDo;
     }
 
     public String getMaVVP() {
@@ -58,5 +59,21 @@ public class VuViPham {
 
     public void setHinhThucXuLy(String hinhThucXuLy) {
         this.hinhThucXuLy = hinhThucXuLy;
+    }
+
+    public String getMaNS() {
+        return maNS;
+    }
+
+    public void setMaNS(String maNS) {
+        this.maNS = maNS;
+    }
+
+    public String getMucDo() {
+        return mucDo;
+    }
+
+    public void setMucDo(String mucDo) {
+        this.mucDo = mucDo;
     }
 }

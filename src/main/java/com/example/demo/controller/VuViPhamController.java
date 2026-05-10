@@ -35,6 +35,9 @@ public class VuViPhamController {
             vvp.setTenVVP(details.getTenVVP());
             vvp.setNgayXayRa(details.getNgayXayRa());
             vvp.setHinhThucXuLy(details.getHinhThucXuLy());
+            vvp.setMaNS(details.getMaNS());
+            vvp.setMucDo(details.getMucDo());
+            
             return ResponseEntity.ok(vvpRepo.save(vvp));
         }).orElse(ResponseEntity.notFound().build());
     }
