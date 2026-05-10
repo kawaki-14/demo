@@ -6,9 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
+import java.util.stream.Collectors;
 
 @RestController
 @CrossOrigin(origins = "*")
@@ -59,5 +58,17 @@ public class NSController {
         } catch (Exception e) {
             return ResponseEntity.status(409).body("Không thể xóa: Nông sản này đang có dữ liệu liên quan trong bảng Kiểm định hoặc Cung cấp!");
         }
+    }
+    
+    @GetMapping("/sap-het-han")
+    public List<NongSan> getSapHetHan() {
+        return nongSanRepository.findAll().stream()
+            .filter(ns -> ns.getHsd() != null)
+            .filter(ns -> {
+                long diff = ns.getHsd().getTime() - System.currentTimeMillis();
+                long days = diff / (1000 * 60 * 60 * 24);
+                return days <= 7;
+            })
+        .collect(Collectors.toList());
     }
 }

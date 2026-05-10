@@ -3,6 +3,7 @@ package com.example.demo.model;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import java.sql.Date;
 
 @Entity
 @Table(name = "NongSan")
@@ -16,6 +17,7 @@ public class NongSan {
     private Integer soLuong;
     private Double gia;
     private String loai;
+    private Date hsd;
 
     public String getMaNS() {
         return maNS;
@@ -64,5 +66,12 @@ public class NongSan {
     public void setLoai(String loai) {
         this.loai = loai;
     }
-    
+
+    public Date getHsd() {
+        return hsd;
+    }
+
+    public void setHsd(Date hsd) {
+        this.hsd = hsd;
+    }
 }
