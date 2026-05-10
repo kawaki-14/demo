@@ -3,6 +3,7 @@ package com.example.demo.model;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.persistence.Transient; // IMPORT CÁI NÀY
 import java.sql.Date;
 
 @Entity
@@ -14,7 +15,11 @@ public class VuViPham {
     private String tenVVP;
     private Date ngayXayRa;
     private String hinhThucXuLy;
+
+    @Transient 
     private String maNS; 
+    
+    @Transient 
     private String mucDo;
 
     public VuViPham() {

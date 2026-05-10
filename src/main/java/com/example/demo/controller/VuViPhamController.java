@@ -7,6 +7,7 @@ import java.util.HashMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Map;
@@ -25,20 +26,29 @@ public class VuViPhamController {
     }
 
     @PostMapping("/add")
+    @Transactional
     public VuViPham add(@RequestBody VuViPham vvp) {
-        return vvpRepo.save(vvp);
+        VuViPham saved = vvpRepo.save(vvp);
+        
+        if (vvp.getMaNS() != null && !vvp.getMaNS().isEmpty()) {
+            vvpRepo.insertDetail(saved.getMaVVP(), vvp.getMaNS(), vvp.getMucDo());
+        }
+        return saved;
     }
 
     @PutMapping("/update/{id}")
+    @Transactional
     public ResponseEntity<VuViPham> update(@PathVariable String id, @RequestBody VuViPham details) {
         return vvpRepo.findById(id).map(vvp -> {
             vvp.setTenVVP(details.getTenVVP());
             vvp.setNgayXayRa(details.getNgayXayRa());
             vvp.setHinhThucXuLy(details.getHinhThucXuLy());
-            vvp.setMaNS(details.getMaNS());
-            vvp.setMucDo(details.getMucDo());
             
-            return ResponseEntity.ok(vvpRepo.save(vvp));
+            vvpRepo.save(vvp);
+            
+            vvpRepo.updateDetail(id, details.getMaNS(), details.getMucDo());
+            
+            return ResponseEntity.ok(vvp);
         }).orElse(ResponseEntity.notFound().build());
     }
 
