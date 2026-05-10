@@ -2,11 +2,14 @@ package com.example.demo.controller;
 
 import com.example.demo.model.VuViPham;
 import com.example.demo.repository.VuViPhamRepository;
+import java.util.ArrayList;
+import java.util.HashMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/vuvipham")
@@ -40,5 +43,24 @@ public class VuViPhamController {
     public ResponseEntity<?> delete(@PathVariable String id) {
         vvpRepo.deleteById(id);
         return ResponseEntity.ok().build();
+    }
+    
+    @GetMapping("/summary")
+    public List<Map<String, Object>> getSummary() {
+        List<Object[]> results = vvpRepo.getFullViolationSummaryNative();
+        List<Map<String, Object>> summary = new ArrayList<>();
+    
+        for (Object[] row : results) {
+            Map<String, Object> map = new HashMap<>();
+            map.put("maVVP", row[0]);
+            map.put("tenVVP", row[1]);
+            map.put("ngayXayRa", row[2]);
+            map.put("hinhThucXuLy", row[3]);
+            map.put("mucDo", row[4]);
+            map.put("tenNS", row[5]);
+            map.put("xuatXu", row[6]);
+            summary.add(map);
+        }
+        return summary;
     }
 }
